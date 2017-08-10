@@ -1,0 +1,2 @@
+C:\Users\Meshack\AppData\Local\Temporary Projects\SignalChat\bin\Debug\SignalChat.exe.config
+F:\Projects\SignalRChat\CSharp\SignalChat\SignalChat\bin\Debug\SignalChat.exe.config
