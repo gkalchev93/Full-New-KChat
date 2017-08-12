@@ -17,6 +17,7 @@ namespace KChatClient.Services
         event Action ConnectionClosed;
         event Action<string, string, MessageType> NewMessage;
         event Action<string, byte[]> NewFileSend;
+        event Action<string, KChatTask> SetNewTask;
 
         Task ConnectAsync();
         Task<List<User>> LoginAsync(string name, byte[] photo);
@@ -25,5 +26,6 @@ namespace KChatClient.Services
         Task SendBroadcastMessageAsync(string msg);
         Task SendUnicastMessageAsync(string recepient, string msg);
         Task SendFileAsync(string recepient, byte[] file);
+        Task SetNewTaskAsync(string recepient, KChatTask task);
     }
 }

@@ -233,7 +233,15 @@
                      SelectedItem="{Binding SelectedParticipant}"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
-                     Background="Gray"/>
+                     Background="Gray">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add Task" Command="{Binding SetNewTaskCommand}"></MenuItem>
+                        <MenuItem Header="View Tasks" Command=""></MenuItem>
+                        <MenuItem Header="Send File" Command="{Binding SendFileCommand}"></MenuItem>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
         </Border>
 
         <!-- Messages -->

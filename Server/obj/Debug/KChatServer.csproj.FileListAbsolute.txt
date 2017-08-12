@@ -46,3 +46,12 @@ C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\Newtonsoft.Json.xml
 C:\Users\turbo\Desktop\Full New KChat\Server\obj\Debug\KChatServer.csprojResolveAssemblyReference.cache
 C:\Users\turbo\Desktop\Full New KChat\Server\obj\Debug\KChat Server.exe
 C:\Users\turbo\Desktop\Full New KChat\Server\obj\Debug\KChat Server.pdb
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\EntityFramework.dll
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\System.Data.SQLite.dll
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\EntityFramework.xml
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\System.Data.SQLite.xml
+C:\Users\turbo\Desktop\Full New KChat\Server\bin\Debug\System.Data.SQLite.dll.config

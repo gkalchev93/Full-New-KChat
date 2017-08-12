@@ -67,7 +67,7 @@ namespace KChatServer
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(message))
             {
                 Clients.Others.BroadcastMessage(name, message);
-            }            
+            }
         }
 
         public void UnicastChat(string recepient, string message)
@@ -109,5 +109,28 @@ namespace KChatServer
                 }
             }
         }
+
+        public void SetNewTask(string recepient, KChatTask task)
+        {
+            var sender = Clients.CallerState.UserName;
+            if (!string.IsNullOrEmpty(sender))
+            {
+                if (recepient != sender)
+                {
+                    if (task != null)
+                    {
+                        if (ChatClients.ContainsKey(recepient))
+                        {
+                            User client = new User();
+                            ChatClients.TryGetValue(recepient, out client);
+                            Console.WriteLine($"{sender} set task to {recepient}");
+                            DbHelper.SetTask(task);
+                            Clients.Client(client.ID).SetTask(sender, task);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+

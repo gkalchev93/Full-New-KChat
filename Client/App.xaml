@@ -56,7 +56,7 @@
             </Style>
 
             <utils:ViewModelLocator x:Key="VMLocator"/>
-            <BitmapImage x:Key="BlankImage" UriSource="/Client;component/Imgs/blank.png"/>
+            <BitmapImage x:Key="BlankImage" UriSource="./Client;component/Imgs/blank.png"/>
             <utils:ByteBitmapSourceConverter x:Key="ByteBmpSrcConverter"/>
         </ResourceDictionary>
 

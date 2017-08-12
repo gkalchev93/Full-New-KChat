@@ -313,8 +313,42 @@ namespace KChatClient.ViewModels
 
         private bool CanSendFile()
         {
-            return (!string.IsNullOrEmpty(Message) && IsConnected &&
-                _selectedParticipant != null && _selectedParticipant.IsLoggedIn);
+            return (IsConnected && _selectedParticipant != null && _selectedParticipant.IsLoggedIn);
+        }
+
+        private ICommand _setNewTaskCommand;
+        public ICommand SetNewTaskCommand
+        {
+            get
+            {
+                if (_setNewTaskCommand == null) _setNewTaskCommand =
+                        new RelayCommandAsync(() => SetNewTask(), (o) => CanSendFile());
+                return _setNewTaskCommand;
+            }
+        }
+
+        private async Task<bool> SetNewTask()
+        {
+            var task = new KChatTask("otGosho", "ZaGosho", "utre da kupish neshto");
+            try
+            {
+                var recepient = _selectedParticipant.Name;
+                await chatService.SetNewTaskAsync(recepient, task);
+                return true;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
+            finally
+            {
+                ChatMessage msg = new ChatMessage
+                {
+                    Author = UserName,
+                    Message = $"You have new task: {task.TaskDesc} \n From: {task.Author}",
+                    Time = DateTime.Now,
+                    IsOriginNative = true
+                };
+                SelectedParticipant.Chatter.Add(msg);
+                Message = string.Empty;
+            }
         }
 
         #region "Event handlers"
@@ -390,6 +424,20 @@ namespace KChatClient.ViewModels
                 }
             });
         }
+
+        private void NewTask(string name, KChatTask task)
+        {
+            var msg = $"You have new task: {task.TaskDesc} \n From: {task.Author}";
+            ChatMessage cm = new ChatMessage { Author = name, Message = msg, Time = DateTime.Now };
+            var sender = _participants.Where((u) => string.Equals(u.Name, name)).FirstOrDefault();
+            ctxTaskFactory.StartNew(() => sender.Chatter.Add(cm)).Wait();
+
+            if (!(SelectedParticipant != null && sender.Name.Equals(SelectedParticipant.Name)))
+            {
+                ctxTaskFactory.StartNew(() => sender.HasSentNewMessage = true).Wait();
+            }
+
+        }
         #endregion
 
         private byte[] Avatar()
@@ -413,6 +461,7 @@ namespace KChatClient.ViewModels
             chatSvc.ConnectionReconnecting += Reconnecting;
             chatSvc.ConnectionReconnected += Reconnected;
             chatSvc.ConnectionClosed += Disconnected;
+            chatSvc.SetNewTask += NewTask;
 
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
         }

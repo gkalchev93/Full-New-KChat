@@ -101,6 +101,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\SampleMainWindowViewModel.cs" />
+    <Compile Include="Models\KChatTask.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Services\DialogService.cs" />
