@@ -236,7 +236,7 @@
                      Background="Gray">
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Add Task" Command="{Binding SetNewTaskCommand}"></MenuItem>
+                        <MenuItem Header="Add Task" x:Name="contxMenuSetTask" Click="MenuItem_Click"/>
                         <MenuItem Header="View Tasks" Command=""></MenuItem>
                         <MenuItem Header="Send File" Command="{Binding SendFileCommand}"></MenuItem>
                     </ContextMenu>
@@ -285,5 +285,26 @@
                         Command="{Binding SendFileCommand}" Grid.Column="1"/>
             </Grid>
         </Border>
+        <Grid x:Name="TaskInputBox" Visibility="Collapsed">
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+            MinWidth="250"
+            Background="Gray" 
+            BorderBrush="Black" 
+            BorderThickness="1" 
+            CornerRadius="0,0,0,0" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" Margin="291,122,-321,136">
+                <StackPanel>
+                    <TextBlock Margin="5" Text="Task Description:" FontWeight="Bold" FontFamily="Cambria" Foreground="White" />
+                    <TextBox MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Arrow" CaretBrush="White" x:Name="InputTextBox" Foreground="White" Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="YesButton" Margin="5" Content="Yes" Background="LightGreen" Click="MenuItem_Click" Command="{Binding SetNewTaskCommand}" />
+                        <Button x:Name="NoButton" Margin="5" Content="No" Background="LightGreen" Click="MenuItem_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
     </Grid>
 </UserControl>    

@@ -110,22 +110,25 @@ namespace KChatServer
             }
         }
 
-        public void SetNewTask(string recepient, KChatTask task)
+        public void SetNewTask(string recepient, string taskDesc)
         {
             var sender = Clients.CallerState.UserName;
             if (!string.IsNullOrEmpty(sender))
             {
                 if (recepient != sender)
                 {
-                    if (task != null)
+                    if (!string.IsNullOrEmpty(taskDesc))
                     {
                         if (ChatClients.ContainsKey(recepient))
                         {
+                            KChatTask task = new KChatTask(sender, recepient, taskDesc);
+
                             User client = new User();
                             ChatClients.TryGetValue(recepient, out client);
                             Console.WriteLine($"{sender} set task to {recepient}");
+
                             DbHelper.SetTask(task);
-                            Clients.Client(client.ID).SetTask(sender, task);
+                            Clients.Client(client.ID).SetTask(sender, taskDesc);
                         }
                     }
                 }

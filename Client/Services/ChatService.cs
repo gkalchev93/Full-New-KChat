@@ -12,7 +12,7 @@ namespace KChatClient.Services
     {
         public event Action<string, string, MessageType> NewMessage;
         public event Action<string, byte[]> NewFileSend;
-        public event Action<string, KChatTask> SetNewTask;
+        public event Action<string, string> SetNewTask;
         public event Action<string> ParticipantDisconnected;
         public event Action<User> ParticipantLoggedIn;
         public event Action<string> ParticipantLoggedOut;
@@ -36,7 +36,7 @@ namespace KChatClient.Services
             hubProxy.On<string, string>("BroadcastMessage", (n, m) => NewMessage?.Invoke(n, m, MessageType.Broadcast));
             hubProxy.On<string, string>("UnicastMessage", (n, m) => NewMessage?.Invoke(n, m, MessageType.Unicast));
             hubProxy.On<string, byte[]>("SendFile", (n, m) => NewFileSend?.Invoke(n, m));
-            hubProxy.On<string, KChatTask>("SetNewTask", (n, m) => SetNewTask?.Invoke(n, m));
+            hubProxy.On<string, string>("SetNewTask", (n, m) => SetNewTask?.Invoke(n, m));
             connection.Reconnecting += Reconnecting;
             connection.Reconnected += Reconnected;
             connection.Closed += Disconnected;
@@ -85,7 +85,7 @@ namespace KChatClient.Services
             await hubProxy.Invoke("SendFile", new object[] { recepient, file });
         }
 
-        public async Task SetNewTaskAsync(string recepient, KChatTask task)
+        public async Task SetNewTaskAsync(string recepient, string task)
         {
             await hubProxy.Invoke("SetNewTask", new object[] { recepient, task });
         }

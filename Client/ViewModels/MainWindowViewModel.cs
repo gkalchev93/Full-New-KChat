@@ -89,6 +89,17 @@ namespace KChatClient.ViewModels
             }
         }
 
+        private string _taskDescription;
+        public string TaskDescription
+        {
+            get { return _taskDescription; }
+            set
+            {
+                _taskDescription = value;
+                OnPropertyChanged();
+            }
+        }
+
         private byte[] _file;
         public byte[] File
         {
@@ -329,25 +340,28 @@ namespace KChatClient.ViewModels
 
         private async Task<bool> SetNewTask()
         {
-            var task = new KChatTask("otGosho", "ZaGosho", "utre da kupish neshto");
+            KChatTask task = null;
             try
             {
                 var recepient = _selectedParticipant.Name;
-                await chatService.SetNewTaskAsync(recepient, task);
+                await chatService.SetNewTaskAsync(recepient, _taskDescription);
                 return true;
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
             finally
             {
-                ChatMessage msg = new ChatMessage
+                if (task != null)
                 {
-                    Author = UserName,
-                    Message = $"You have new task: {task.TaskDesc} \n From: {task.Author}",
-                    Time = DateTime.Now,
-                    IsOriginNative = true
-                };
-                SelectedParticipant.Chatter.Add(msg);
-                Message = string.Empty;
+                    ChatMessage msg = new ChatMessage
+                    {
+                        Author = UserName,
+                        Message = $"You have new task: {task.TaskDesc} \n From: {task.Author}",
+                        Time = DateTime.Now,
+                        IsOriginNative = true
+                    };
+                    SelectedParticipant.Chatter.Add(msg);
+                    Message = string.Empty;
+                }
             }
         }
 
@@ -425,9 +439,9 @@ namespace KChatClient.ViewModels
             });
         }
 
-        private void NewTask(string name, KChatTask task)
+        private void NewTask(string name, string taskDesc)
         {
-            var msg = $"You have new task: {task.TaskDesc} \n From: {task.Author}";
+            var msg = $"You have new task: {taskDesc} \n From: {name}";
             ChatMessage cm = new ChatMessage { Author = name, Message = msg, Time = DateTime.Now };
             var sender = _participants.Where((u) => string.Equals(u.Name, name)).FirstOrDefault();
             ctxTaskFactory.StartNew(() => sender.Chatter.Add(cm)).Wait();

@@ -9,6 +9,6 @@
         void BroadcastMessage(string sender, string message);
         void UnicastMessage(string sender, string message);
         void SendFile(string sender, byte[] file);
-        void SetTask(string sender, KChatTask task);
+        void SetTask(string sender, string taskDesc);
     }
 }
