@@ -51,6 +51,43 @@
             </Setter>
         </Style>
 
+        <Style x:Key="ViewTaskButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkBrush}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="#00000000">
+                            <materialDesign:PackIcon Name="SendFileIcon" Kind="Check" SnapsToDevicePixels="True"
+                                                     Foreground="LightGreen"
+                                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                     Margin="{TemplateBinding Padding}" Width="Auto" Height="Auto"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" TargetName="SendFileIcon" Value="{DynamicResource PrimaryHueMidBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Foreground" TargetName="SendFileIcon" Value="{DynamicResource PrimaryHueMidBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.23"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="SendFileButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -225,7 +262,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.RowSpan="2" BorderThickness="0,0,1,0" SnapsToDevicePixels="True"
+        <Border Grid.RowSpan="1" BorderThickness="0,0,1,1" SnapsToDevicePixels="True"
                  BorderBrush="White">
             <ListBox ItemsSource="{Binding Participants}" 
                      ItemTemplate="{DynamicResource ParticipantsDataTemplate}"
@@ -261,8 +298,16 @@
             </ItemsControl.Template>
         </ItemsControl>
 
+        <Border Grid.Row="1" Grid.Column="0" Margin="0,0,160,0" Width="35" Height="35" SnapsToDevicePixels="True" Background="Gray">
+
+            <!-- View Tasks -->
+            <Button x:Name="ShowTasksButton" Style="{DynamicResource ViewTaskButtonStyle}"
+                        Command="{Binding ShowTasksCommand}" />
+
+        </Border>
+
         <Border Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True"
-                BorderBrush="White">
+                BorderBrush="White" BorderThickness="1,1,0,0">
             <Grid Background="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -279,13 +324,17 @@
                         <KeyBinding Key="Return" Command="{Binding SendMessageCommand}"/>
                     </TextBox.InputBindings>
                 </TextBox>
+
                 <!-- Send -->
-                <Button x:Name="SendButton" Margin="360,10,40,10"
+                <Button x:Name="SendButton" Margin="360,10,40,10" 
+                        Width="25" Height="25"
                         Style="{DynamicResource SendButtonStyle}"
                         Command="{Binding SendMessageCommand}" Grid.ColumnSpan="2"/>
+
                 <!-- Send File -->
                 <Button x:Name="FileSendButton" Margin="15,10,5,10"
-                        Style="{DynamicResource SendFileButtonStyle}"
+                        Width="25" Height="25"
+                        Style="{DynamicResource SendFileButtonStyle}" 
                         Command="{Binding SendFileCommand}" Grid.Column="1"/>
             </Grid>
         </Border>

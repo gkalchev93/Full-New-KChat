@@ -1,4 +1,5 @@
-﻿using System.Data.SQLite;
+﻿using System.Collections.Generic;
+using System.Data.SQLite;
 
 namespace KChatServer
 {
@@ -25,6 +26,29 @@ namespace KChatServer
         {
             var cmd = Conn.CreateCommand();
             cmd.CommandText = $"UPDATE KTasks SET TaskState = '{newState.ToString()}' WHERE Id = '{taskId}'";
+        }
+
+        public static List<KChatTask> SelectUserTasks(string name)
+        {
+            var retList = new List<KChatTask>();
+            var cmd = Conn.CreateCommand();
+            cmd.CommandText = $"SELECT * FROM KTasks WHERE Author LIKE ('{name}')";
+
+            var dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                var tmpTask = new KChatTask(
+                                             dataReader["Author"].ToString(),
+                                             dataReader["Assignee"].ToString(),
+                                             dataReader["TaskDescription"].ToString(),
+                                             dataReader["TaskPriority"].ToString(),
+                                             dataReader["TaskState"].ToString(),
+                                             dataReader["CreatedOnDate"].ToString());
+
+                retList.Add(tmpTask);
+            }
+
+            return retList;
         }
     }
 }

@@ -10,5 +10,6 @@
         void UnicastMessage(string sender, string message);
         void SendFile(string sender, byte[] file);
         void SetTask(string sender, string taskDesc, string taskPriority);
+        void ShowUserTasks(string name);
     }
 }

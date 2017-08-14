@@ -30,5 +30,19 @@ namespace KChatServer
             TaskPriority = taskP;
         }
 
+        public KChatTask(string author, string assignee, string taskD, string taskP, string taskState, string createDate)
+        {
+            Author = author;
+            TaskDesc = taskD;
+            Assignee = assignee;
+            TaskPriority = taskP;
+
+            DateTime.TryParse(createDate, out DateTime tmp);
+            CreatedOnDate = tmp;
+
+            Enum.TryParse<TaskState>(taskState, out TaskState tmp2);
+            TaskState = tmp2;
+        }
+
     }
 }

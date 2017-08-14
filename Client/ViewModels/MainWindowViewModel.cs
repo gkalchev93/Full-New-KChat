@@ -371,7 +371,6 @@ namespace KChatClient.ViewModels
 
         private async Task<bool> SetNewTask()
         {
-            KChatTask task = null;
             try
             {
                 var recepient = _selectedParticipant.Name;
@@ -381,18 +380,43 @@ namespace KChatClient.ViewModels
             catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
             finally
             {
-                if (task != null)
+                if (!string.IsNullOrEmpty(_taskDescription))
                 {
                     ChatMessage msg = new ChatMessage
                     {
                         Author = UserName,
-                        Message = $"You have new task from: {task.Author}",
+                        Message = $"You have new task from: {_userName}",
                         Time = DateTime.Now,
                         IsOriginNative = true
                     };
                     SelectedParticipant.Chatter.Add(msg);
                     Message = string.Empty;
                 }
+            }
+        }
+
+        private ICommand _showTasksCommand;
+        private ICommand ShowTasksCommand
+        {
+            get
+            {
+                if (_showTasksCommand == null) _showTasksCommand =
+                        new RelayCommandAsync(() => ShowUserTasks(), (o) => _isConnected);
+                return _showTasksCommand;
+            }
+        }
+
+        private async Task<bool> ShowUserTasks()
+        {
+            try
+            {
+                var recepient = _selectedParticipant.Name;
+                await chatService.ShowUserTasksAsync(_userName);
+                return true;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
+            finally
+            {
             }
         }
 

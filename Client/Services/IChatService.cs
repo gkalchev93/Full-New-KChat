@@ -27,5 +27,7 @@ namespace KChatClient.Services
         Task SendUnicastMessageAsync(string recepient, string msg);
         Task SendFileAsync(string recepient, byte[] file);
         Task SetNewTaskAsync(string recepient, string taskDesc, string taskPriority);
+        Task ShowUserTasksAsync(string name);
+
     }
 }
