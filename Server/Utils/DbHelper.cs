@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 
 namespace KChatServer
 {
@@ -14,15 +9,15 @@ namespace KChatServer
         public static void CreateTable()
         {
             var cmd = Conn.CreateCommand();
-            cmd.CommandText = "CREATE TABLE IF NOT EXISTS KTasks (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Author varchar(50) NOT NULL, CreatedOnDate Date NOT NULL, Assignee varchar(50) NOT NULL, TaskState charchar(20) NOT NULL, TaskDescription varchar(300) NOT NULL);";
+            cmd.CommandText = "CREATE TABLE IF NOT EXISTS KTasks (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Author varchar(50) NOT NULL, CreatedOnDate Date NOT NULL, Assignee varchar(50) NOT NULL, TaskState charchar(20) NOT NULL, TaskDescription varchar(300) NOT NULL, TaskPriority INTEGER NOT NULL);";
             cmd.ExecuteNonQuery();
         }
 
         public static void SetTask(KChatTask task)
         {
             var cmd = Conn.CreateCommand();
-            cmd.CommandText = $"INSERT INTO KTasks(Author,CreatedOnDate,Assignee,TaskState,TaskDescription) " +
-                              $"VALUES('{task.Author}','{task.CreatedOnDate.ToString()}','{task.Assignee}','{task.TaskState.ToString()}','{task.TaskDesc}')";
+            cmd.CommandText = $"INSERT INTO KTasks(Author,CreatedOnDate,Assignee,TaskState,TaskDescription, TaskPriority) " +
+                              $"VALUES('{task.Author}','{task.CreatedOnDate.ToString()}','{task.Assignee}','{task.TaskState.ToString()}','{task.TaskDesc}',{task.TaskPriority})";
             cmd.ExecuteNonQuery();
         }
 

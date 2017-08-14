@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KChatServer
 {
@@ -22,14 +18,16 @@ namespace KChatServer
         public string Assignee { get; private set; }
         public TaskState TaskState { get; private set; }
         public string TaskDesc { get; private set; }
+        public string TaskPriority { get; private set; }
 
-        public KChatTask(string author, string assignee, string taskD)
+        public KChatTask(string author, string assignee, string taskD, string taskP)
         {
             Author = author;
             CreatedOnDate = DateTime.Now;
             Assignee = assignee;
             TaskState = TaskState.NewTask;
             TaskDesc = taskD;
+            TaskPriority = taskP;
         }
 
     }

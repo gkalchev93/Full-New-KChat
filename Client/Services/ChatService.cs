@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using KChatClient.Enums;
+﻿using KChatClient.Enums;
 using KChatClient.Models;
-using System.Net;
 using Microsoft.AspNet.SignalR.Client;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace KChatClient.Services
 {
@@ -12,7 +12,7 @@ namespace KChatClient.Services
     {
         public event Action<string, string, MessageType> NewMessage;
         public event Action<string, byte[]> NewFileSend;
-        public event Action<string, string> SetNewTask;
+        public event Action<string, string, string> SetNewTask;
         public event Action<string> ParticipantDisconnected;
         public event Action<User> ParticipantLoggedIn;
         public event Action<string> ParticipantLoggedOut;
@@ -36,7 +36,7 @@ namespace KChatClient.Services
             hubProxy.On<string, string>("BroadcastMessage", (n, m) => NewMessage?.Invoke(n, m, MessageType.Broadcast));
             hubProxy.On<string, string>("UnicastMessage", (n, m) => NewMessage?.Invoke(n, m, MessageType.Unicast));
             hubProxy.On<string, byte[]>("SendFile", (n, m) => NewFileSend?.Invoke(n, m));
-            hubProxy.On<string, string>("SetNewTask", (n, m) => SetNewTask?.Invoke(n, m));
+            hubProxy.On<string, string, string>("SetNewTask", (n, m, k) => SetNewTask?.Invoke(n, m, k));
             connection.Reconnecting += Reconnecting;
             connection.Reconnected += Reconnected;
             connection.Closed += Disconnected;
@@ -85,9 +85,9 @@ namespace KChatClient.Services
             await hubProxy.Invoke("SendFile", new object[] { recepient, file });
         }
 
-        public async Task SetNewTaskAsync(string recepient, string task)
+        public async Task SetNewTaskAsync(string recepient, string taskD, string taskP)
         {
-            await hubProxy.Invoke("SetNewTask", new object[] { recepient, task });
+            await hubProxy.Invoke("SetNewTask", new object[] { recepient, taskD, taskP });
         }
     }
 }

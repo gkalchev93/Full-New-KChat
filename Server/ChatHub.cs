@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using Microsoft.AspNet.SignalR;
 
 namespace KChatServer
 {
@@ -110,7 +110,7 @@ namespace KChatServer
             }
         }
 
-        public void SetNewTask(string recepient, string taskDesc)
+        public void SetNewTask(string recepient, string taskDesc, string taskPriority)
         {
             var sender = Clients.CallerState.UserName;
             if (!string.IsNullOrEmpty(sender))
@@ -121,14 +121,14 @@ namespace KChatServer
                     {
                         if (ChatClients.ContainsKey(recepient))
                         {
-                            KChatTask task = new KChatTask(sender, recepient, taskDesc);
+                            KChatTask task = new KChatTask(sender, recepient, taskDesc, taskPriority);
 
                             User client = new User();
                             ChatClients.TryGetValue(recepient, out client);
                             Console.WriteLine($"{sender} set task to {recepient}");
 
                             DbHelper.SetTask(task);
-                            Clients.Client(client.ID).SetTask(sender, taskDesc);
+                            Clients.Client(client.ID).SetTask(sender, taskDesc, taskPriority);
                         }
                     }
                 }
@@ -136,4 +136,3 @@ namespace KChatServer
         }
     }
 }
-

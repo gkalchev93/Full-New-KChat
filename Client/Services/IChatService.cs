@@ -1,8 +1,8 @@
-﻿using System;
+﻿using KChatClient.Enums;
+using KChatClient.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using KChatClient.Models;
-using KChatClient.Enums;
 
 namespace KChatClient.Services
 {
@@ -17,7 +17,7 @@ namespace KChatClient.Services
         event Action ConnectionClosed;
         event Action<string, string, MessageType> NewMessage;
         event Action<string, byte[]> NewFileSend;
-        event Action<string, string> SetNewTask;
+        event Action<string, string, string> SetNewTask;
 
         Task ConnectAsync();
         Task<List<User>> LoginAsync(string name, byte[] photo);
@@ -26,6 +26,6 @@ namespace KChatClient.Services
         Task SendBroadcastMessageAsync(string msg);
         Task SendUnicastMessageAsync(string recepient, string msg);
         Task SendFileAsync(string recepient, byte[] file);
-        Task SetNewTaskAsync(string recepient, string taskDesc);
+        Task SetNewTaskAsync(string recepient, string taskDesc, string taskPriority);
     }
 }

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Drawing;
-using KChatClient.Services;
+﻿using KChatClient.Commands;
 using KChatClient.Enums;
 using KChatClient.Models;
-using KChatClient.Commands;
-using System.Windows.Input;
+using KChatClient.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace KChatClient.ViewModels
 {
@@ -96,6 +95,17 @@ namespace KChatClient.ViewModels
             set
             {
                 _taskDescription = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _taskPriority;
+        public string TaskPriority
+        {
+            get { return _taskPriority; }
+            set
+            {
+                _taskPriority = value;
                 OnPropertyChanged();
             }
         }
@@ -327,6 +337,27 @@ namespace KChatClient.ViewModels
             return (IsConnected && _selectedParticipant != null && _selectedParticipant.IsLoggedIn);
         }
 
+        private ICommand _isSelectedUser;
+        public ICommand IsSelectedUser
+        {
+            get
+            {
+                if (_isSelectedUser == null) _isSelectedUser =
+                        new RelayCommandAsync(() => SetNothing(), (o) => CanSendFile());
+                return _setNewTaskCommand;
+            }
+        }
+
+        private Task SetNothing()
+        {
+            return null;
+        }
+
+        private bool IsTheUserSelected()
+        {
+            return (_selectedParticipant != null);
+        }
+
         private ICommand _setNewTaskCommand;
         public ICommand SetNewTaskCommand
         {
@@ -344,7 +375,7 @@ namespace KChatClient.ViewModels
             try
             {
                 var recepient = _selectedParticipant.Name;
-                await chatService.SetNewTaskAsync(recepient, _taskDescription);
+                await chatService.SetNewTaskAsync(recepient, _taskDescription, _taskPriority);
                 return true;
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
@@ -355,7 +386,7 @@ namespace KChatClient.ViewModels
                     ChatMessage msg = new ChatMessage
                     {
                         Author = UserName,
-                        Message = $"You have new task: {task.TaskDesc} \n From: {task.Author}",
+                        Message = $"You have new task from: {task.Author}",
                         Time = DateTime.Now,
                         IsOriginNative = true
                     };
@@ -439,7 +470,7 @@ namespace KChatClient.ViewModels
             });
         }
 
-        private void NewTask(string name, string taskDesc)
+        private void NewTask(string name, string taskDesc, string taskPriority)
         {
             var msg = $"You have new task: {taskDesc} \n From: {name}";
             ChatMessage cm = new ChatMessage { Author = name, Message = msg, Time = DateTime.Now };
