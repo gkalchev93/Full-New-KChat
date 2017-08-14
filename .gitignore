@@ -1,2 +1,4 @@
 ClientA/bin/Debug/
 SignalChat/bin/Debug/
+/Client/obj/Debug/
+/Server/obj/Debug/
