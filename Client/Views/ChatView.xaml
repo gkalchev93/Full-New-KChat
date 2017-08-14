@@ -236,7 +236,7 @@
                      Background="Gray">
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Add Task" x:Name="contxMenuSetTask" Click="MenuItem_Click"/>
+                        <MenuItem Header="Add Task" x:Name="contxMenuSetTask" Click="MenuItem_Click" Command="{Binding IsSelectedUser}"/>
                         <MenuItem Header="View Tasks" Command=""></MenuItem>
                         <MenuItem Header="Send File" Command="{Binding SendFileCommand}"></MenuItem>
                     </ContextMenu>
@@ -271,10 +271,14 @@
                 <!-- Message -->
                 <TextBox x:Name="MessageTxtBox" Margin="10,10,25,10" MaxHeight="80"                                         
                          BorderThickness="1" BorderBrush="Black" Background="White" Foreground="Black"
-                         TextWrapping="Wrap" AcceptsReturn="True" CaretBrush="Black" 
+                         TextWrapping="Wrap" CaretBrush="Black" 
                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                          VerticalScrollBarVisibility="Auto"
-                         Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{Binding SendMessageCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
                 <!-- Send -->
                 <Button x:Name="SendButton" Margin="360,10,40,10"
                         Style="{DynamicResource SendButtonStyle}"
@@ -297,7 +301,15 @@
             VerticalAlignment="Center" Margin="291,122,-321,136">
                 <StackPanel>
                     <TextBlock Margin="5" Text="Task Description:" FontWeight="Bold" FontFamily="Cambria" Foreground="White" />
-                    <TextBox MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Arrow" CaretBrush="White" x:Name="InputTextBox" Foreground="White" Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox materialDesign:HintAssist.Hint="Task Description" MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Arrow" CaretBrush="White" x:Name="InputTextBox" Foreground="White" Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox materialDesign:HintAssist.Hint="Task Priority" Foreground="White" Width="150" Margin="0,10,0,0" SelectedIndex="{Binding TaskPriority, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem Content="zero" Visibility="Hidden"/>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                    </ComboBox>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="YesButton" Margin="5" Content="Yes" Background="LightGreen" Click="MenuItem_Click" Command="{Binding SetNewTaskCommand}" />
                         <Button x:Name="NoButton" Margin="5" Content="No" Background="LightGreen" Click="MenuItem_Click" />
