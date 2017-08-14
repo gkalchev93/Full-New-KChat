@@ -56,7 +56,7 @@
             </Style>
 
             <utils:ViewModelLocator x:Key="VMLocator"/>
-            <BitmapImage x:Key="BlankImage" UriSource="C:\Users\turbo\Desktop\Full New KChat\Client\Imgs\blank.png"/>
+            <BitmapImage x:Key="BlankImage" UriSource=".\Client\Imgs\blank.png"/>
             <utils:ByteBitmapSourceConverter x:Key="ByteBmpSrcConverter"/>
         </ResourceDictionary>
 

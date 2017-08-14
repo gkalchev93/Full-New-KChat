@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KChatClient.Models;
 using KChatClient.ViewModels;
-using KChatClient.Models;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace KChatClient.Data
 {
-    public class SampleMainWindowViewModel : ViewModelBase 
+    public class SampleMainWindowViewModel : ViewModelBase
     {
         private string _userName;
         public string UserName
@@ -48,25 +45,50 @@ namespace KChatClient.Data
         public SampleMainWindowViewModel()
         {
             ObservableCollection<ChatMessage> someChatter = new ObservableCollection<ChatMessage>();
-            someChatter.Add(new ChatMessage { Author = "Batman", Message = "The Batmobile sucks",
-                Time = DateTime.Now, IsOriginNative = true });
-            someChatter.Add(new ChatMessage { Author = "Superman", Message = "It always has...",
-                Time = DateTime.Now });
-            someChatter.Add(new ChatMessage { Author = "Batman", Message = "Really?! You never said so before.",
-                Time = DateTime.Now, IsOriginNative = true });
-            someChatter.Add(new ChatMessage { Author = "Superman",
-                Message = "Didn't want to hurt your feelings :D. Lorem Ipsum something blah blah blah blah blah blah blah blah. Lorem Ipsum something blah blah blah blah.",
-                Time = DateTime.Now });
-            someChatter.Add(new ChatMessage { Author = "Batman", Message = "I have no feelings",
-                Time = DateTime.Now, IsOriginNative = true });
-            someChatter.Add(new ChatMessage { Author = "Batman",  Message = "How's Martha?",
-                Time = DateTime.Now, IsOriginNative = true });
+            someChatter.Add(new ChatMessage
+            {
+                Author = "George",
+                Message = "Hello",
+                Time = DateTime.Now
+            });
+            someChatter.Add(new ChatMessage
+            {
+                Author = "Boss",
+                Message = "Hello, George",
+                Time = DateTime.Now,
+                IsOriginNative = true
+            });
+            someChatter.Add(new ChatMessage
+            {
+                Author = "George",
+                Message = "Can I ask you something",
+                Time = DateTime.Now
+            });
+            someChatter.Add(new ChatMessage
+            {
+                Author = "Boss",
+                Message = "Yes, you can.",
+                Time = DateTime.Now,
+                IsOriginNative = true
+            });
+            someChatter.Add(new ChatMessage
+            {
+                Author = "George",
+                Message = "I am not sure that I can finish my tasks for today.",
+                Time = DateTime.Now
+            });
+            someChatter.Add(new ChatMessage
+            {
+                Author = "George",
+                Message = "Is that a problem to continue tommorrow?",
+                Time = DateTime.Now
+            });
 
-            Participants.Add(new Participant { Name = "Superman", Chatter = someChatter });
-            Participants.Add(new Participant { Name = "Wonder Woman", Chatter = someChatter, IsLoggedIn = false });
-            Participants.Add(new Participant { Name = "Aquaman", Chatter = someChatter, HasSentNewMessage = true });
-            Participants.Add(new Participant { Name = "Captain Canada", Chatter = someChatter, HasSentNewMessage = true });
-            Participants.Add(new Participant { Name = "Iron Man", Chatter = someChatter });
+            Participants.Add(new Participant { Name = "George", Chatter = someChatter });
+            Participants.Add(new Participant { Name = "Samantha", Chatter = someChatter, IsLoggedIn = false });
+            Participants.Add(new Participant { Name = "Caleb", Chatter = someChatter, HasSentNewMessage = true });
+            Participants.Add(new Participant { Name = "Mike", Chatter = someChatter, HasSentNewMessage = true });
+            Participants.Add(new Participant { Name = "John", Chatter = someChatter });
 
             SelectedParticipant = Participants.First();
         }
