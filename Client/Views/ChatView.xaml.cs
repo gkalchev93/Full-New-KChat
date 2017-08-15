@@ -16,7 +16,9 @@ namespace KChatClient.Views
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (TaskInputBox.Visibility == Visibility.Visible)
+            {
                 TaskInputBox.Visibility = Visibility.Collapsed;
+            }
             else
                 TaskInputBox.Visibility = Visibility.Visible;
         }

@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows;
-using Microsoft.VisualBasic;
 
 namespace KChatClient.Services
 {
@@ -30,6 +29,11 @@ namespace KChatClient.Services
         public void ShowNotification(string message, string caption = "")
         {
             MessageBox.Show(message, caption); ;
+        }
+
+        public void ShowToastNotification(string desc)
+        {
+            Services.ToastNotificationModel.ShowToastNotification(desc);
         }
     }
 }

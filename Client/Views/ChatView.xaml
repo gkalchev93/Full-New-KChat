@@ -255,7 +255,7 @@
     <Grid Background="Gray">
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MaxHeight="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220"/>
@@ -307,7 +307,7 @@
         </Border>
 
         <Border Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True"
-                BorderBrush="White" BorderThickness="1,1,0,0">
+                BorderBrush="White" BorderThickness="1,1,0,0" >
             <Grid Background="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -350,8 +350,8 @@
             VerticalAlignment="Center" Margin="291,122,-321,136">
                 <StackPanel>
                     <TextBlock Margin="5" Text="Task Description:" FontWeight="Bold" FontFamily="Cambria" Foreground="White" />
-                    <TextBox materialDesign:HintAssist.Hint="Task Description" MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Arrow" CaretBrush="White" x:Name="InputTextBox" Foreground="White" Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox materialDesign:HintAssist.Hint="Task Priority" Foreground="White" Width="150" Margin="0,10,0,0" SelectedIndex="{Binding TaskPriority, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox materialDesign:HintAssist.Hint="Task Description" MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Arrow" CaretBrush="White" x:Name="tbDescription" Foreground="White" Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox materialDesign:HintAssist.Hint="Task Priority" Foreground="White" Width="150" Margin="0,10,0,0" SelectedIndex="{Binding TaskPriority, UpdateSourceTrigger=PropertyChanged}" x:Name="cbPriority">
                         <ComboBoxItem Content="zero" Visibility="Hidden"/>
                         <ComboBoxItem Content="1"/>
                         <ComboBoxItem Content="2"/>

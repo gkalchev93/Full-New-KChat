@@ -126,9 +126,9 @@ namespace KChatServer
                             User client = new User();
                             ChatClients.TryGetValue(recepient, out client);
                             Console.WriteLine($"{sender} set task to {recepient}");
-
                             DbHelper.SetTask(task);
-                            Clients.Client(client.ID).SetTask(sender, taskDesc, taskPriority);
+
+                            Clients.Client(client.ID).SetNewTask(sender, taskDesc, taskPriority);
                         }
                     }
                 }
@@ -145,6 +145,7 @@ namespace KChatServer
                     Console.WriteLine($"{sender} gets the task for {name}");
                     var tasks = DbHelper.SelectUserTasks(name);
 
+                    Clients.Client(Clients.CallerState.Id).ShowUserTasks("Tova sa ti taskovete");
                 }
             }
         }

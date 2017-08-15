@@ -377,7 +377,11 @@ namespace KChatClient.ViewModels
                 await chatService.SetNewTaskAsync(recepient, _taskDescription, _taskPriority);
                 return true;
             }
-            catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+                return false;
+            }
             finally
             {
                 if (!string.IsNullOrEmpty(_taskDescription))
@@ -391,6 +395,8 @@ namespace KChatClient.ViewModels
                     };
                     SelectedParticipant.Chatter.Add(msg);
                     Message = string.Empty;
+                    TaskDescription = string.Empty;
+                    TaskPriority = string.Empty;
                 }
             }
         }
@@ -496,7 +502,8 @@ namespace KChatClient.ViewModels
 
         private void NewTask(string name, string taskDesc, string taskPriority)
         {
-            var msg = $"You have new task: {taskDesc} \n From: {name}";
+            var msg = $"You have new task: {taskDesc} \nFrom: {name}";
+            dialogService.ShowToastNotification(msg);
             ChatMessage cm = new ChatMessage { Author = name, Message = msg, Time = DateTime.Now };
             var sender = _participants.Where((u) => string.Equals(u.Name, name)).FirstOrDefault();
             ctxTaskFactory.StartNew(() => sender.Chatter.Add(cm)).Wait();

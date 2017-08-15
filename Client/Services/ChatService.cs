@@ -24,7 +24,7 @@ namespace KChatClient.Services
 
         private IHubProxy hubProxy;
         private HubConnection connection;
-        private string url = "http://localhost:8080/kchat";
+        private string url = "http://192.168.0.102:8080/kchat";
 
         public async Task ConnectAsync()
         {
