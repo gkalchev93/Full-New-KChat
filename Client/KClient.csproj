@@ -84,6 +84,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.4.3\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -110,11 +112,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connected Services\KChatWcfService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Data\SampleMainWindowViewModel.cs" />
     <Compile Include="Models\Participant.cs" />
-    <Compile Include="Services\ChatService.cs" />
+    <Compile Include="Services\KChatSignaRService.cs" />
     <Compile Include="Services\DialogService.cs" />
-    <Compile Include="Services\IChatService.cs" />
+    <Compile Include="Services\IKChatSignaRService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\ToastNotification.cs" />
     <Compile Include="Utils\BringNewItemIntoViewBehavior.cs" />
@@ -173,6 +180,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\KChatWcfService\KChat.KChatWcfService.RemoteFileInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KChatWcfService\KChatWcfService.wsdl" />
+    <None Include="Connected Services\KChatWcfService\kwcf.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KChatWcfService\kwcf1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KChatWcfService\kwcf2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -188,6 +208,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imgs\blank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\KChatWcfService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KChatWcfService\kwcf.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KChatWcfService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KChatWcfService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KChatWcfService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

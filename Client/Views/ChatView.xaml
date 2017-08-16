@@ -335,7 +335,7 @@
                 <Button x:Name="FileSendButton" Margin="15,10,5,10"
                         Width="25" Height="25"
                         Style="{DynamicResource SendFileButtonStyle}" 
-                        Command="{Binding SendFileCommand}" Grid.Column="1"/>
+                        Click="SendFile" Grid.Column="1"/>
             </Grid>
         </Border>
         <Grid x:Name="TaskInputBox" Visibility="Collapsed">

@@ -22,12 +22,11 @@ namespace KChatClient.Services
         Task ConnectAsync();
         Task<List<User>> LoginAsync(string name, byte[] photo);
         Task LogoutAsync();
-
         Task SendBroadcastMessageAsync(string msg);
         Task SendUnicastMessageAsync(string recepient, string msg);
         Task SendFileAsync(string recepient, byte[] file);
         Task SetNewTaskAsync(string recepient, string taskDesc, string taskPriority);
-        Task ShowUserTasksAsync(string name);
-
     }
+
+
 }

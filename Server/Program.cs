@@ -5,7 +5,8 @@ using Owin;
 using System;
 using System.Data.SQLite;
 using System.IO;
-
+using System.ServiceModel;
+using System.ServiceModel.Description;
 
 namespace KChatServer
 {
@@ -16,27 +17,46 @@ namespace KChatServer
             string dbPath = Path.Combine(Constants.appDataFolder, Path.Combine(Constants.appFolder, Constants.dbName));
 
             var url = "http://192.168.0.102:8080/";
+            ServiceHost host;
+
             using (WebApp.Start<Startup>(url))
             {
-                Console.WriteLine($"Server running at {url}");
-                Console.WriteLine("Creating a server database at :" + dbPath);
-                if (!Directory.Exists(Path.GetDirectoryName(dbPath)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(dbPath));
+                Console.WriteLine($"Started SignalR is running at {url}");
 
-                if (!File.Exists(dbPath))
-                    SQLiteConnection.CreateFile(dbPath);
-
-                using (DbHelper.Conn = new SQLiteConnection($"Data Source = {dbPath}; Version = 3; FailIfMissing = True"))
+                var wcfUrl = new Uri(url + "kwcf");
+                using (host = new ServiceHost(typeof(KChatServer.WCF.KChatWcfService), wcfUrl))
                 {
-                    DbHelper.Conn.Open();
-                    DbHelper.CreateTable();
-
-                    Console.WriteLine("Input 'quit' for exiting...");
-                    string endString = string.Empty;
-                    while (endString != "quit")
+                    ServiceMetadataBehavior smb = new ServiceMetadataBehavior
                     {
-                        endString = Console.ReadLine().ToLower();
+                        HttpGetEnabled = true
+                    };
+                    smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
+                    host.Description.Behaviors.Add(smb);
+
+                    host.Open();
+                    Console.WriteLine($"WCF Service is running at {wcfUrl}.");
+
+                    Console.WriteLine("Creating a server database at :" + dbPath);
+                    if (!Directory.Exists(Path.GetDirectoryName(dbPath)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(dbPath));
+
+                    if (!File.Exists(dbPath))
+                        SQLiteConnection.CreateFile(dbPath);
+
+                    using (DbHelper.Conn = new SQLiteConnection($"Data Source = {dbPath}; Version = 3; FailIfMissing = True"))
+                    {
+                        DbHelper.Conn.Open();
+                        DbHelper.CreateTable();
+
+                        Console.WriteLine("Input 'quit' for exiting...");
+                        string endString = string.Empty;
+                        while (endString != "quit")
+                        {
+                            endString = Console.ReadLine().ToLower();
+                        }
                     }
+
+                    host.Close();
                 }
             }
         }

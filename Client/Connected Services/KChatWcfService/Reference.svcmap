@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9cdc684e-7097-4bed-9938-39b4a6018df2" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://192.168.0.102:8080/kwcf" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="kwcf.xsd" MetadataType="Schema" ID="a2de1de3-cc63-48fb-9efb-7dcd6e7d31d3" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd2" />
+    <MetadataFile FileName="kwcf1.xsd" MetadataType="Schema" ID="ab8ed36b-33b6-4196-9814-fd3399bb22b2" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd0" />
+    <MetadataFile FileName="kwcf.disco" MetadataType="Disco" ID="1b0a3524-f72b-4aed-b4d6-3da4e42bf4d7" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?disco" />
+    <MetadataFile FileName="kwcf2.xsd" MetadataType="Schema" ID="6988c8b5-974a-4726-af06-81e424f23448" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd1" />
+    <MetadataFile FileName="KChatWcfService.wsdl" MetadataType="Wsdl" ID="cf7a89ac-d5a1-4a2e-add0-2fd6c39298bd" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -401,31 +401,6 @@ namespace KChatClient.ViewModels
             }
         }
 
-        private ICommand _showTasksCommand;
-        private ICommand ShowTasksCommand
-        {
-            get
-            {
-                if (_showTasksCommand == null) _showTasksCommand =
-                        new RelayCommandAsync(() => ShowUserTasks(), (o) => _isConnected);
-                return _showTasksCommand;
-            }
-        }
-
-        private async Task<bool> ShowUserTasks()
-        {
-            try
-            {
-                var recepient = _selectedParticipant.Name;
-                await chatService.ShowUserTasksAsync(_userName);
-                return true;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
-            finally
-            {
-            }
-        }
-
         #region "Event handlers"
         private void NewMessage(string name, string msg, MessageType mt)
         {
@@ -513,6 +488,19 @@ namespace KChatClient.ViewModels
                 ctxTaskFactory.StartNew(() => sender.HasSentNewMessage = true).Wait();
             }
 
+        }
+
+        private void ShowUserTasks(string name)
+        {
+            var msg = name;
+            ChatMessage cm = new ChatMessage { Author = name, Message = msg, Time = DateTime.Now };
+            var sender = _participants.Where((u) => string.Equals(u.Name, name)).FirstOrDefault();
+            ctxTaskFactory.StartNew(() => sender.Chatter.Add(cm)).Wait();
+
+            if (!(SelectedParticipant != null && sender.Name.Equals(SelectedParticipant.Name)))
+            {
+                ctxTaskFactory.StartNew(() => sender.HasSentNewMessage = true).Wait();
+            }
         }
         #endregion
 

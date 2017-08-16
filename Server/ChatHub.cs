@@ -9,7 +9,7 @@ namespace KChatServer
 {
     public class ChatHub : Hub<IClient>
     {
-        private static ConcurrentDictionary<string, User> ChatClients = new ConcurrentDictionary<string, User>();
+        public static ConcurrentDictionary<string, User> ChatClients = new ConcurrentDictionary<string, User>();
 
         public override Task OnDisconnected(bool stopCalled)
         {
@@ -131,21 +131,6 @@ namespace KChatServer
                             Clients.Client(client.ID).SetNewTask(sender, taskDesc, taskPriority);
                         }
                     }
-                }
-            }
-        }
-
-        public void ShowUserTasks(string name)
-        {
-            var sender = Clients.CallerState.UserName;
-            if (!string.IsNullOrEmpty(name))
-            {
-                if (ChatClients.ContainsKey(sender))
-                {
-                    Console.WriteLine($"{sender} gets the task for {name}");
-                    var tasks = DbHelper.SelectUserTasks(name);
-
-                    Clients.Client(Clients.CallerState.Id).ShowUserTasks("Tova sa ti taskovete");
                 }
             }
         }
