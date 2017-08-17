@@ -123,6 +123,7 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\IKChatSignaRService.cs" />
     <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\KWcfService.cs" />
     <Compile Include="Services\ToastNotification.cs" />
     <Compile Include="Utils\BringNewItemIntoViewBehavior.cs" />
     <Compile Include="Utils\ByteBitmapSourceConverter.cs" />
@@ -134,6 +135,9 @@
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaskListView.xaml.cs">
+      <DependentUpon>TaskListView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -159,6 +163,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TaskListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\ChatMessage.cs" />
@@ -180,13 +188,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\KChatWcfService\KChat.KChatWcfService.RemoteFileInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\KChatWcfService\KChatWcfService.wsdl" />
-    <None Include="Connected Services\KChatWcfService\kwcf.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\KChatWcfService\kwcf1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -229,6 +231,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Server\KChatServer.csproj">
+      <Project>{52daf33f-0550-4335-80e2-1ef80e9ed0d5}</Project>
+      <Name>KChatServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

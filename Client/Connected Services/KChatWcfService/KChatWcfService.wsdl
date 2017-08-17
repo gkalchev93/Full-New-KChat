@@ -4,50 +4,43 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://192.168.0.102:8080/kwcf?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://192.168.0.102:8080/kwcf?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://192.168.0.102:8080/kwcf?xsd=xsd2" namespace="http://schemas.microsoft.com/Message" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="DownloadRequest">
-    <wsdl:part name="parameters" element="tns:DownloadRequest" />
+  <wsdl:message name="IKWcfService_SendFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendFile" />
   </wsdl:message>
-  <wsdl:message name="RemoteFileInfo">
-    <wsdl:part name="parameters" element="tns:RemoteFileInfo" />
+  <wsdl:message name="IKWcfService_SendFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendFileResponse" />
   </wsdl:message>
-  <wsdl:message name="RemoteFileInfo_Headers">
-    <wsdl:part name="FileName" element="tns:FileName" />
-    <wsdl:part name="Length" element="tns:Length" />
+  <wsdl:message name="IKWcfService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
   </wsdl:message>
-  <wsdl:message name="IKWcfService_UploadFile_InputMessage">
-    <wsdl:part name="parameters" element="tns:UploadFile" />
-  </wsdl:message>
-  <wsdl:message name="IKWcfService_UploadFile_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UploadFileResponse" />
+  <wsdl:message name="IKWcfService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
   <wsdl:portType name="IKWcfService">
-    <wsdl:operation name="DownloadFile">
-      <wsdl:input wsam:Action="http://tempuri.org/IKWcfService/DownloadFile" name="DownloadRequest" message="tns:DownloadRequest" />
-      <wsdl:output wsam:Action="http://tempuri.org/IKWcfService/DownloadFileResponse" name="RemoteFileInfo" message="tns:RemoteFileInfo" />
+    <wsdl:operation name="SendFile">
+      <wsdl:input wsam:Action="http://tempuri.org/IKWcfService/SendFile" message="tns:IKWcfService_SendFile_InputMessage" />
+      <wsdl:output wsam:Action="http://tempuri.org/IKWcfService/SendFileResponse" message="tns:IKWcfService_SendFile_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="UploadFile">
-      <wsdl:input wsam:Action="http://tempuri.org/IKWcfService/UploadFile" message="tns:IKWcfService_UploadFile_InputMessage" />
-      <wsdl:output wsam:Action="http://tempuri.org/IKWcfService/UploadFileResponse" message="tns:IKWcfService_UploadFile_OutputMessage" />
+    <wsdl:operation name="Login">
+      <wsdl:input wsam:Action="http://tempuri.org/IKWcfService/Login" message="tns:IKWcfService_Login_InputMessage" />
+      <wsdl:output wsam:Action="http://tempuri.org/IKWcfService/LoginResponse" message="tns:IKWcfService_Login_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IKWcfService" type="tns:IKWcfService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="DownloadFile">
-      <soap:operation soapAction="http://tempuri.org/IKWcfService/DownloadFile" style="document" />
-      <wsdl:input name="DownloadRequest">
+    <wsdl:operation name="SendFile">
+      <soap:operation soapAction="http://tempuri.org/IKWcfService/SendFile" style="document" />
+      <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
-      <wsdl:output name="RemoteFileInfo">
-        <soap:header message="tns:RemoteFileInfo_Headers" part="FileName" use="literal" />
-        <soap:header message="tns:RemoteFileInfo_Headers" part="Length" use="literal" />
+      <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UploadFile">
-      <soap:operation soapAction="http://tempuri.org/IKWcfService/UploadFile" style="document" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IKWcfService/Login" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

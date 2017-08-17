@@ -3,6 +3,7 @@
     public enum UserModes
     {
         Login,
-        Chat
+        Chat,
+        TaskView
     }
 }

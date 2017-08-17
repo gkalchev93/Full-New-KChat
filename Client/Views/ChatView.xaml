@@ -4,12 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-             xmlns:local="clr-namespace:KChatClient.Views"
              xmlns:data="clr-namespace:KChatClient.Data"
              xmlns:utils="clr-namespace:KChatClient.Utils"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:Converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"             
-             Background="{DynamicResource MaterialDesignPaper}"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type data:SampleMainWindowViewModel}}"
              d:DesignHeight="400" d:DesignWidth="650">
@@ -59,7 +56,7 @@
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Template">
@@ -298,12 +295,20 @@
             </ItemsControl.Template>
         </ItemsControl>
 
-        <Border Grid.Row="1" Grid.Column="0" Margin="0,0,160,0" Width="35" Height="35" SnapsToDevicePixels="True" Background="Gray">
-
-            <!-- View Tasks -->
-            <Button x:Name="ShowTasksButton" Style="{DynamicResource ViewTaskButtonStyle}"
-                        Command="{Binding ShowTasksCommand}" />
-
+        <Border Grid.Row="1" Grid.Column="0" Margin="10,0,10,0" Width="200" Height="35" SnapsToDevicePixels="True" Background="Gray">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!-- View Tasks -->
+                <Button x:Name="ShowTasksButton" Style="{DynamicResource ViewTaskButtonStyle}"
+                        Command="{Binding ShowTasksCommand}" Grid.Column="0" >
+                </Button>
+                <TextBlock x:Name="tbUserName"  
+                           Margin="70,0,0,0" 
+                           VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold"
+                           Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Foreground="White"></TextBlock>
+            </Grid>
         </Border>
 
         <Border Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True"

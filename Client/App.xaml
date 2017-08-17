@@ -1,7 +1,6 @@
 ﻿<Application x:Class="KChatClient.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:KChatClient"
              xmlns:views="clr-namespace:KChatClient.Views"
              xmlns:utils="clr-namespace:KChatClient.Utils"
              xmlns:enums="clr-namespace:KChatClient.Enums"
@@ -45,12 +44,20 @@
             <DataTemplate x:Key="ChatTemplate">
                 <views:ChatView/>
             </DataTemplate>
+            <DataTemplate x:Key="TaskViewTemplate">
+                <views:TaskListView/>
+            </DataTemplate>
 
             <Style x:Key="ChatContentStyle" TargetType="ContentControl">
                 <Setter Property="ContentTemplate" Value="{StaticResource LoginTemplate}"/>
                 <Style.Triggers>
+
                     <DataTrigger Binding="{Binding UserMode}" Value="{x:Static enums:UserModes.Chat}">
                         <Setter Property="ContentTemplate" Value="{StaticResource ChatTemplate}"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding UserMode}" Value="{x:Static enums:UserModes.TaskView}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource TaskViewTemplate}"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>

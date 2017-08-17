@@ -15,60 +15,17 @@ namespace KChat.KChatWcfService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="KChatWcfService.IKWcfService")]
     public interface IKWcfService {
         
-        // CODEGEN: Generating message contract since the wrapper name (DownloadRequest) of message DownloadRequest does not match the default value (DownloadFile)
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/DownloadFile", ReplyAction="http://tempuri.org/IKWcfService/DownloadFileResponse")]
-        KChat.KChatWcfService.RemoteFileInfo DownloadFile(KChat.KChatWcfService.DownloadRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/SendFile", ReplyAction="http://tempuri.org/IKWcfService/SendFileResponse")]
+        void SendFile(string sender, byte[] file, string filePath);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/DownloadFile", ReplyAction="http://tempuri.org/IKWcfService/DownloadFileResponse")]
-        System.Threading.Tasks.Task<KChat.KChatWcfService.RemoteFileInfo> DownloadFileAsync(KChat.KChatWcfService.DownloadRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/SendFile", ReplyAction="http://tempuri.org/IKWcfService/SendFileResponse")]
+        System.Threading.Tasks.Task SendFileAsync(string sender, byte[] file, string filePath);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/UploadFile", ReplyAction="http://tempuri.org/IKWcfService/UploadFileResponse")]
-        void UploadFile(byte[] file, string filePath);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/Login", ReplyAction="http://tempuri.org/IKWcfService/LoginResponse")]
+        void Login(string username);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/UploadFile", ReplyAction="http://tempuri.org/IKWcfService/UploadFileResponse")]
-        System.Threading.Tasks.Task UploadFileAsync(byte[] file, string filePath);
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="DownloadRequest", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class DownloadRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public string FileName;
-        
-        public DownloadRequest() {
-        }
-        
-        public DownloadRequest(string FileName) {
-            this.FileName = FileName;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="RemoteFileInfo", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class RemoteFileInfo {
-        
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://tempuri.org/")]
-        public string FileName;
-        
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://tempuri.org/")]
-        public long Length;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public System.IO.Stream FileByteStream;
-        
-        public RemoteFileInfo() {
-        }
-        
-        public RemoteFileInfo(string FileName, long Length, System.IO.Stream FileByteStream) {
-            this.FileName = FileName;
-            this.Length = Length;
-            this.FileByteStream = FileByteStream;
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/Login", ReplyAction="http://tempuri.org/IKWcfService/LoginResponse")]
+        System.Threading.Tasks.Task LoginAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -98,37 +55,20 @@ namespace KChat.KChatWcfService {
                 base(binding, remoteAddress) {
         }
         
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KChat.KChatWcfService.RemoteFileInfo KChat.KChatWcfService.IKWcfService.DownloadFile(KChat.KChatWcfService.DownloadRequest request) {
-            return base.Channel.DownloadFile(request);
+        public void SendFile(string sender, byte[] file, string filePath) {
+            base.Channel.SendFile(sender, file, filePath);
         }
         
-        public long DownloadFile(ref string FileName, out System.IO.Stream FileByteStream) {
-            KChat.KChatWcfService.DownloadRequest inValue = new KChat.KChatWcfService.DownloadRequest();
-            inValue.FileName = FileName;
-            KChat.KChatWcfService.RemoteFileInfo retVal = ((KChat.KChatWcfService.IKWcfService)(this)).DownloadFile(inValue);
-            FileName = retVal.FileName;
-            FileByteStream = retVal.FileByteStream;
-            return retVal.Length;
+        public System.Threading.Tasks.Task SendFileAsync(string sender, byte[] file, string filePath) {
+            return base.Channel.SendFileAsync(sender, file, filePath);
         }
         
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KChat.KChatWcfService.RemoteFileInfo> KChat.KChatWcfService.IKWcfService.DownloadFileAsync(KChat.KChatWcfService.DownloadRequest request) {
-            return base.Channel.DownloadFileAsync(request);
+        public void Login(string username) {
+            base.Channel.Login(username);
         }
         
-        public System.Threading.Tasks.Task<KChat.KChatWcfService.RemoteFileInfo> DownloadFileAsync(string FileName) {
-            KChat.KChatWcfService.DownloadRequest inValue = new KChat.KChatWcfService.DownloadRequest();
-            inValue.FileName = FileName;
-            return ((KChat.KChatWcfService.IKWcfService)(this)).DownloadFileAsync(inValue);
-        }
-        
-        public void UploadFile(byte[] file, string filePath) {
-            base.Channel.UploadFile(file, filePath);
-        }
-        
-        public System.Threading.Tasks.Task UploadFileAsync(byte[] file, string filePath) {
-            return base.Channel.UploadFileAsync(file, filePath);
+        public System.Threading.Tasks.Task LoginAsync(string username) {
+            return base.Channel.LoginAsync(username);
         }
     }
 }

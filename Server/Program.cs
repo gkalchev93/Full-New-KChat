@@ -23,8 +23,12 @@ namespace KChatServer
             {
                 Console.WriteLine($"Started SignalR is running at {url}");
 
-                var wcfUrl = new Uri(url + "kwcf");
-                using (host = new ServiceHost(typeof(KChatServer.WCF.KChatWcfService), wcfUrl))
+                var wcfHttpUrl = new Uri(url + "kwcf");
+                var wcfTcpUrl = new Uri("net.tcp://192.168.0.102:8081");
+
+                Uri[] baseAdresses = { wcfTcpUrl, wcfHttpUrl };
+
+                using (host = new ServiceHost(typeof(KChatServer.WCF.KChatWcfService), baseAdresses))
                 {
                     ServiceMetadataBehavior smb = new ServiceMetadataBehavior
                     {
@@ -32,9 +36,26 @@ namespace KChatServer
                     };
                     smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
                     host.Description.Behaviors.Add(smb);
+                    NetTcpBinding tcpBinding = new NetTcpBinding(SecurityMode.None, true);
+                    //Updated: to enable file transefer of 64 MB
+                    tcpBinding.MaxBufferPoolSize = (int)67108864;
+                    tcpBinding.MaxBufferSize = 67108864;
+                    tcpBinding.MaxReceivedMessageSize = (int)67108864;
+                    tcpBinding.TransferMode = TransferMode.Buffered;
+                    tcpBinding.ReaderQuotas.MaxArrayLength = 67108864;
+                    tcpBinding.ReaderQuotas.MaxBytesPerRead = 67108864;
+                    tcpBinding.ReaderQuotas.MaxStringContentLength = 67108864;
 
+
+                    tcpBinding.MaxConnections = 100;
+
+                    tcpBinding.ReceiveTimeout = new TimeSpan(20, 0, 0);
+                    tcpBinding.ReliableSession.Enabled = true;
+                    tcpBinding.ReliableSession.InactivityTimeout = new TimeSpan(20, 0, 10);
+
+                    host.AddServiceEndpoint(typeof(WCF.IKWcfService), tcpBinding, "tcp");
                     host.Open();
-                    Console.WriteLine($"WCF Service is running at {wcfUrl}.");
+                    Console.WriteLine($"WCF Service is running at {wcfHttpUrl}.");
 
                     Console.WriteLine("Creating a server database at :" + dbPath);
                     if (!Directory.Exists(Path.GetDirectoryName(dbPath)))

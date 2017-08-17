@@ -180,6 +180,10 @@ namespace KChatClient.ViewModels
             {
                 List<User> users = new List<User>();
                 users = await chatService.LoginAsync(_userName, Avatar());
+
+                // TODO: LOGIN IN WCF
+                // KChatClient.Services.KWcfService.Login(_userName);
+
                 if (users != null)
                 {
                     users.ForEach(u => Participants.Add(new Participant { Name = u.Name, Photo = u.Photo }));
