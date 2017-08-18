@@ -44,9 +44,6 @@
             <DataTemplate x:Key="ChatTemplate">
                 <views:ChatView/>
             </DataTemplate>
-            <DataTemplate x:Key="TaskViewTemplate">
-                <views:TaskListView/>
-            </DataTemplate>
 
             <Style x:Key="ChatContentStyle" TargetType="ContentControl">
                 <Setter Property="ContentTemplate" Value="{StaticResource LoginTemplate}"/>
@@ -54,10 +51,6 @@
 
                     <DataTrigger Binding="{Binding UserMode}" Value="{x:Static enums:UserModes.Chat}">
                         <Setter Property="ContentTemplate" Value="{StaticResource ChatTemplate}"/>
-                    </DataTrigger>
-
-                    <DataTrigger Binding="{Binding UserMode}" Value="{x:Static enums:UserModes.TaskView}">
-                        <Setter Property="ContentTemplate" Value="{StaticResource TaskViewTemplate}"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 
 namespace KChatServer
@@ -18,7 +19,7 @@ namespace KChatServer
         {
             var cmd = Conn.CreateCommand();
             cmd.CommandText = $"INSERT INTO KTasks(Author,CreatedOnDate,Assignee,TaskState,TaskDescription, TaskPriority) " +
-                              $"VALUES('{task.Author}','{task.CreatedOnDate.ToString()}','{task.Assignee}','{task.TaskState.ToString()}','{task.TaskDesc}',{task.TaskPriority})";
+                              $"VALUES('{task.Author}','{task.CreatedOnDate.ToString("yyyy-MM-dd hh:mm")}','{task.Assignee}','{task.TaskState.ToString()}','{task.TaskDesc}',{task.TaskPriority})";
             cmd.ExecuteNonQuery();
         }
 
@@ -28,27 +29,17 @@ namespace KChatServer
             cmd.CommandText = $"UPDATE KTasks SET TaskState = '{newState.ToString()}' WHERE Id = '{taskId}'";
         }
 
-        public static List<KChatTask> SelectUserTasks(string name)
+        public static DataTable SelectUserTasks(string name)
         {
             var retList = new List<KChatTask>();
             var cmd = Conn.CreateCommand();
             cmd.CommandText = $"SELECT * FROM KTasks WHERE Author LIKE ('{name}')";
 
             var dataReader = cmd.ExecuteReader();
-            while (dataReader.Read())
-            {
-                var tmpTask = new KChatTask(
-                                             dataReader["Author"].ToString(),
-                                             dataReader["Assignee"].ToString(),
-                                             dataReader["TaskDescription"].ToString(),
-                                             dataReader["TaskPriority"].ToString(),
-                                             dataReader["TaskState"].ToString(),
-                                             dataReader["CreatedOnDate"].ToString());
+            var dataTable = new DataTable();
+            dataTable.Load(dataReader);
 
-                retList.Add(tmpTask);
-            }
-
-            return retList;
+            return dataTable;
         }
     }
 }

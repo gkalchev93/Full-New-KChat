@@ -123,7 +123,6 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\IKChatSignaRService.cs" />
     <Compile Include="Services\IDialogService.cs" />
-    <Compile Include="Services\KWcfService.cs" />
     <Compile Include="Services\ToastNotification.cs" />
     <Compile Include="Utils\BringNewItemIntoViewBehavior.cs" />
     <Compile Include="Utils\ByteBitmapSourceConverter.cs" />
@@ -136,8 +135,8 @@
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TaskListView.xaml.cs">
-      <DependentUpon>TaskListView.xaml</DependentUpon>
+    <Compile Include="Views\TaskList.xaml.cs">
+      <DependentUpon>TaskList.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -163,7 +162,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TaskListView.xaml">
+    <Page Include="Views\TaskList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +188,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Connected Services\KChatWcfService\KChatWcfService.wsdl" />
+    <None Include="Connected Services\KChatWcfService\kwcf.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\KChatWcfService\kwcf1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -196,6 +198,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

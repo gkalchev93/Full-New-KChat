@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -62,6 +61,18 @@ namespace KChatClient.ViewModels
             {
                 _selectedParticipant = value;
                 if (SelectedParticipant.HasSentNewMessage) SelectedParticipant.HasSentNewMessage = false;
+                SelectedUserName = SelectedParticipant.Name;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _selectedUserName;
+        public string SelectedUserName
+        {
+            get { return _selectedUserName; }
+            set
+            {
+                _selectedUserName = value;
                 OnPropertyChanged();
             }
         }
@@ -181,9 +192,6 @@ namespace KChatClient.ViewModels
                 List<User> users = new List<User>();
                 users = await chatService.LoginAsync(_userName, Avatar());
 
-                // TODO: LOGIN IN WCF
-                // KChatClient.Services.KWcfService.Login(_userName);
-
                 if (users != null)
                 {
                     users.ForEach(u => Participants.Add(new Participant { Name = u.Name, Photo = u.Photo }));
@@ -297,42 +305,6 @@ namespace KChatClient.ViewModels
                     return;
                 }
                 Photo = pic;
-            }
-        }
-
-        private ICommand _sendFileCommand;
-        public ICommand SendFileCommand
-        {
-            get
-            {
-                if (_sendFileCommand == null) _sendFileCommand =
-                        new RelayCommandAsync(() => SendFile(), (o) => CanSendFile());
-                return _sendFileCommand;
-            }
-        }
-
-        private async Task<bool> SendFile()
-        {
-            var filePath = dialogService.OpenFile("Select file", "");
-            try
-            {
-                var recepient = _selectedParticipant.Name;
-                string debug = "Gosho";
-                await chatService.SendFileAsync(recepient, Encoding.ASCII.GetBytes(debug));
-                return true;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
-            finally
-            {
-                ChatMessage msg = new ChatMessage
-                {
-                    Author = UserName,
-                    Message = "File was send",
-                    Time = DateTime.Now,
-                    IsOriginNative = true
-                };
-                SelectedParticipant.Chatter.Add(msg);
-                Message = string.Empty;
             }
         }
 

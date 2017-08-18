@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.ServiceModel;
 
 namespace KChatServer.WCF
@@ -7,73 +8,74 @@ namespace KChatServer.WCF
     [ServiceContract(CallbackContract = typeof(IKClient), SessionMode = SessionMode.Required)]
     public interface IKWcfService
     {
-        //    [OperationContract]
-        //    void ReceiveFile(string fileName);
 
         [OperationContract]
         void SendFile(string sender, byte[] file, string filePath);
 
         [OperationContract]
         void Login(string username);
+
+        [OperationContract]
+        void Logout();
+
+        [OperationContract]
+        DataTable GetTasks(string user);
     }
 
-    //[ServiceContract]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single,
+    ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     public class KChatWcfService : IKWcfService
     {
 
         private readonly Dictionary<IKClient, string> _users = new Dictionary<IKClient, string>();
 
-        //[OperationContract]
-        public void Login(string userName)
+        public IKClient CurrentCallback
         {
-            var connection = OperationContext.Current.GetCallbackChannel<IKClient>();
-            _users[connection] = userName;
+            get
+            {
+                return OperationContext.Current.GetCallbackChannel<IKClient>();
+            }
         }
 
-        //[OperationContract]
-        //public void ReceiveFile(string fileName)
-        //{
-        //    try
-        //    {
-        //        // get some info about the input file
-        //        string filePath = System.IO.Path.Combine(@"c:\Uploadfiles", fileName);
-        //        System.IO.FileInfo fileInfo = new System.IO.FileInfo(filePath);
-
-        //        // check if exists
-        //        if (!fileInfo.Exists) throw new System.IO.FileNotFoundException("File not found", fileName);
-
-        //        // open stream
-        //        System.IO.FileStream stream = new System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-        //        // return result
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
-
-        //[OperationContract]
-        public void SendFile(string sender, byte[] file, string fileName)
+        public void Login(string userName)
         {
-            //string uploadFolder = Path.Combine(Constants.appDataFolder, Constants.appFolder);
-            //string filePath = Path.Combine(uploadFolder, fileName);
+            if (!_users.ContainsValue(userName) && !_users.ContainsKey(CurrentCallback))
+            {
+                System.Console.Write("++ " + userName + " logged in WCF service");
+                _users.Add(CurrentCallback, userName);
+            }
+        }
 
-            //if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-            //    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+        public void Logout()
+        {
+            if (_users.ContainsKey(CurrentCallback))
+            {
+                System.Console.WriteLine("-- " + _users[CurrentCallback] + " logged out from WCF service");
+                _users.Remove(CurrentCallback);
+            }
+        }
 
-            //File.WriteAllBytes(filePath, request);
-
-            var connection = OperationContext.Current.GetCallbackChannel<IKClient>();
-            if (!_users.TryGetValue(connection, out string user))
+        public void SendFile(string receiver, byte[] file, string fileName)
+        {
+            string sender = string.Empty;
+            if (!_users.ContainsKey(CurrentCallback))
                 return;
 
-            foreach (var otherConnection in _users.Keys)
+            if (!_users.TryGetValue(CurrentCallback, out sender))
+                return;
+
+            foreach (var user in _users)
             {
-                if (otherConnection == connection)
+                if (user.Value == sender)
                     continue;
-                otherConnection.RecieveFile(sender, file, fileName);
+                else if (user.Value == receiver)
+                    user.Key.RecieveFile(sender, file, fileName);
             }
+        }
+
+        public DataTable GetTasks(string user)
+        {
+            return DbHelper.SelectUserTasks(user);
         }
     }
 }

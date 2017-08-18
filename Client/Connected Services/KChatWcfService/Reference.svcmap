@@ -22,6 +22,7 @@
     <MetadataSource Address="http://192.168.0.102:8080/kwcf" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="kwcf.xsd" MetadataType="Schema" ID="23398ec1-cb75-40c2-b7be-fe1c3179d5b3" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd2" />
     <MetadataFile FileName="kwcf1.xsd" MetadataType="Schema" ID="ab8ed36b-33b6-4196-9814-fd3399bb22b2" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd0" />
     <MetadataFile FileName="kwcf.disco" MetadataType="Disco" ID="1b0a3524-f72b-4aed-b4d6-3da4e42bf4d7" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?disco" />
     <MetadataFile FileName="kwcf2.xsd" MetadataType="Schema" ID="6988c8b5-974a-4726-af06-81e424f23448" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd1" />

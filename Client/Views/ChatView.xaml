@@ -9,7 +9,9 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type data:SampleMainWindowViewModel}}"
-             d:DesignHeight="400" d:DesignWidth="650">
+             d:DesignHeight="400" d:DesignWidth="650"
+             Loaded="Login">
+
     <UserControl.Resources>
         <Style x:Key="SendButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
@@ -272,7 +274,8 @@
                     <ContextMenu>
                         <MenuItem Header="Add Task" x:Name="contxMenuSetTask" Click="MenuItem_Click" Command="{Binding IsSelectedUser}"/>
                         <MenuItem Header="View Tasks" Command=""></MenuItem>
-                        <MenuItem Header="Send File" Command="{Binding SendFileCommand}"></MenuItem>
+                        <MenuItem Header="Send File" Click="SendFile" 
+                                  Tag="{Binding SelectedUserName, UpdateSourceTrigger=PropertyChanged}"></MenuItem>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>
@@ -302,7 +305,7 @@
                 </Grid.ColumnDefinitions>
                 <!-- View Tasks -->
                 <Button x:Name="ShowTasksButton" Style="{DynamicResource ViewTaskButtonStyle}"
-                        Command="{Binding ShowTasksCommand}" Grid.Column="0" >
+                        Click="ShowTasks" Grid.Column="0" >
                 </Button>
                 <TextBlock x:Name="tbUserName"  
                            Margin="70,0,0,0" 
@@ -318,7 +321,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
-                <!-- Message -->
+                <!-- Message Text Box -->
                 <TextBox x:Name="MessageTxtBox" Margin="10,10,25,10" MaxHeight="80"                                         
                          BorderThickness="1" BorderBrush="Black" Background="White" Foreground="Black"
                          TextWrapping="Wrap" CaretBrush="Black" 
@@ -330,7 +333,7 @@
                     </TextBox.InputBindings>
                 </TextBox>
 
-                <!-- Send -->
+                <!-- Send Message-->
                 <Button x:Name="SendButton" Margin="360,10,40,10" 
                         Width="25" Height="25"
                         Style="{DynamicResource SendButtonStyle}"
@@ -339,8 +342,10 @@
                 <!-- Send File -->
                 <Button x:Name="FileSendButton" Margin="15,10,5,10"
                         Width="25" Height="25"
-                        Style="{DynamicResource SendFileButtonStyle}" 
-                        Click="SendFile" Grid.Column="1"/>
+                        Style="{DynamicResource SendFileButtonStyle}"
+                        Tag="{Binding SelectedUserName, UpdateSourceTrigger=PropertyChanged}"
+                        Click="SendFile"
+                        Grid.Column="1"/>
             </Grid>
         </Border>
         <Grid x:Name="TaskInputBox" Visibility="Collapsed">

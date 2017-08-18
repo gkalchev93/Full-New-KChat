@@ -12,7 +12,7 @@ namespace KChat.KChatWcfService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="KChatWcfService.IKWcfService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="KChatWcfService.IKWcfService", CallbackContract=typeof(KChat.KChatWcfService.IKWcfServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IKWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/SendFile", ReplyAction="http://tempuri.org/IKWcfService/SendFileResponse")]
@@ -26,6 +26,25 @@ namespace KChat.KChatWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/Login", ReplyAction="http://tempuri.org/IKWcfService/LoginResponse")]
         System.Threading.Tasks.Task LoginAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/Logout", ReplyAction="http://tempuri.org/IKWcfService/LogoutResponse")]
+        void Logout();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/Logout", ReplyAction="http://tempuri.org/IKWcfService/LogoutResponse")]
+        System.Threading.Tasks.Task LogoutAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/GetTasks", ReplyAction="http://tempuri.org/IKWcfService/GetTasksResponse")]
+        System.Data.DataTable GetTasks(string user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKWcfService/GetTasks", ReplyAction="http://tempuri.org/IKWcfService/GetTasksResponse")]
+        System.Threading.Tasks.Task<System.Data.DataTable> GetTasksAsync(string user);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IKWcfServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IKWcfService/RecieveFile")]
+        void RecieveFile(string sender, byte[] file, string fileName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -34,25 +53,26 @@ namespace KChat.KChatWcfService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class KWcfServiceClient : System.ServiceModel.ClientBase<KChat.KChatWcfService.IKWcfService>, KChat.KChatWcfService.IKWcfService {
+    public partial class KWcfServiceClient : System.ServiceModel.DuplexClientBase<KChat.KChatWcfService.IKWcfService>, KChat.KChatWcfService.IKWcfService {
         
-        public KWcfServiceClient() {
+        public KWcfServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public KWcfServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public KWcfServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public KWcfServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public KWcfServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public KWcfServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public KWcfServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public KWcfServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public KWcfServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         public void SendFile(string sender, byte[] file, string filePath) {
@@ -69,6 +89,22 @@ namespace KChat.KChatWcfService {
         
         public System.Threading.Tasks.Task LoginAsync(string username) {
             return base.Channel.LoginAsync(username);
+        }
+        
+        public void Logout() {
+            base.Channel.Logout();
+        }
+        
+        public System.Threading.Tasks.Task LogoutAsync() {
+            return base.Channel.LogoutAsync();
+        }
+        
+        public System.Data.DataTable GetTasks(string user) {
+            return base.Channel.GetTasks(user);
+        }
+        
+        public System.Threading.Tasks.Task<System.Data.DataTable> GetTasksAsync(string user) {
+            return base.Channel.GetTasksAsync(user);
         }
     }
 }
