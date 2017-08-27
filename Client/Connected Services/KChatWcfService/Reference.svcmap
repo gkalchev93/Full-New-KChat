@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://192.168.0.102:8080/kwcf" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8080/kwcf" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="kwcf.xsd" MetadataType="Schema" ID="23398ec1-cb75-40c2-b7be-fe1c3179d5b3" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd2" />
-    <MetadataFile FileName="kwcf1.xsd" MetadataType="Schema" ID="ab8ed36b-33b6-4196-9814-fd3399bb22b2" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd0" />
-    <MetadataFile FileName="kwcf.disco" MetadataType="Disco" ID="1b0a3524-f72b-4aed-b4d6-3da4e42bf4d7" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?disco" />
-    <MetadataFile FileName="kwcf2.xsd" MetadataType="Schema" ID="6988c8b5-974a-4726-af06-81e424f23448" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?xsd=xsd1" />
-    <MetadataFile FileName="KChatWcfService.wsdl" MetadataType="Wsdl" ID="cf7a89ac-d5a1-4a2e-add0-2fd6c39298bd" SourceId="1" SourceUrl="http://192.168.0.102:8080/kwcf?wsdl" />
+    <MetadataFile FileName="kwcf1.disco" MetadataType="Disco" ID="3dc1aa9b-d3e9-4ba1-b3aa-223f2eee65fa" SourceId="1" SourceUrl="http://127.0.0.1:8080/kwcf?disco" />
+    <MetadataFile FileName="kwcf3.xsd" MetadataType="Schema" ID="52c9fd38-89ca-4f66-b755-9ff6c318ee15" SourceId="1" SourceUrl="http://127.0.0.1:8080/kwcf?xsd=xsd0" />
+    <MetadataFile FileName="KChatWcfServiceImpl.wsdl" MetadataType="Wsdl" ID="14c5bdc4-0ea7-44b7-8f2b-1ca2532986cd" SourceId="1" SourceUrl="http://127.0.0.1:8080/kwcf?wsdl" />
+    <MetadataFile FileName="kwcf31.xsd" MetadataType="Schema" ID="48551994-4c24-45aa-a841-4b6923e30244" SourceId="1" SourceUrl="http://127.0.0.1:8080/kwcf?xsd=xsd1" />
+    <MetadataFile FileName="kwcf32.xsd" MetadataType="Schema" ID="43890dd6-142b-4e77-94bf-d371bd635491" SourceId="1" SourceUrl="http://127.0.0.1:8080/kwcf?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
