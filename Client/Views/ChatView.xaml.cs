@@ -29,7 +29,7 @@ namespace KChatClient.Views
 
 		private void SendFile(object sender, RoutedEventArgs e)
 		{
-			var senderObj = sender as Button;
+			var senderObj = sender as MenuItem;
 			var receiver = senderObj.Tag.ToString();
 
 			var filePath = dialogService.OpenFile("Select file to send:");
@@ -39,7 +39,7 @@ namespace KChatClient.Views
 
 		public void RecieveFile(string sender, byte[] file, string fileName)
 		{
-			var confirmation = dialogService.ShowConfirmationRequest($"You are goind to receive file from {sender}. Do you want to receive it?", "KChat");
+			var confirmation = dialogService.ShowConfirmationRequest($"You are goind to receive file from {sender}. Do you want to receive it?", "KChat Receiving file");
 			if (confirmation)
 			{
 				dialogService.SaveFile("Select folder to save the file", fileName, file);
@@ -52,9 +52,17 @@ namespace KChatClient.Views
 			wcfClient.Login(tbUserName.Text);
 		}
 
-		public void ShowTasks(object sender, RoutedEventArgs e)
+		public void ShowMyTasks(object sender, RoutedEventArgs e)
 		{
 			KChat.Views.TaskList tskDlg = new KChat.Views.TaskList(tbUserName.Text, wcfClient);
+			tskDlg.ShowDialog();
+		}
+
+		public void ShowUserTasks(object sender, RoutedEventArgs e)
+		{
+			var menItem = sender as MenuItem;
+
+			KChat.Views.TaskList tskDlg = new KChat.Views.TaskList(menItem.Tag.ToString(), wcfClient);
 			tskDlg.ShowDialog();
 		}
 

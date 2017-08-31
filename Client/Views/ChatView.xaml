@@ -273,9 +273,10 @@
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Add Task" x:Name="contxMenuSetTask" Click="MenuItem_Click" Command="{Binding IsSelectedUser}"/>
-                        <MenuItem Header="View Tasks" Command=""></MenuItem>
+                        <MenuItem Header="View Tasks" Click="ShowUserTasks" 
+                                  Tag="{Binding SelectedUserName, UpdateSourceTrigger=PropertyChanged}" Command="{Binding IsSelectedUser}" />
                         <MenuItem Header="Send File" Click="SendFile" 
-                                  Tag="{Binding SelectedUserName, UpdateSourceTrigger=PropertyChanged}"></MenuItem>
+                                  Tag="{Binding SelectedUserName, UpdateSourceTrigger=PropertyChanged}" Command="{Binding IsSelectedUser}" />
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>
@@ -305,8 +306,7 @@
                 </Grid.ColumnDefinitions>
                 <!-- View Tasks -->
                 <Button x:Name="ShowTasksButton" Style="{DynamicResource ViewTaskButtonStyle}"
-                        Click="ShowTasks" Grid.Column="0" >
-                </Button>
+                        Click="ShowMyTasks" Grid.Column="0" Margin="0,0,163,0" />
                 <TextBlock x:Name="tbUserName"  
                            Margin="70,0,0,0" 
                            VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold"
@@ -340,12 +340,12 @@
                         Command="{Binding SendMessageCommand}" Grid.ColumnSpan="2"/>
 
                 <!-- Send File -->
-                <Button x:Name="FileSendButton" Margin="15,10,5,10"
+                <!--<Button x:Name="FileSendButton" Margin="15,10,5,10"
                         Width="25" Height="25"
                         Style="{DynamicResource SendFileButtonStyle}"
                         Tag="{Binding SelectedUserName, UpdateSourceTrigger=PropertyChanged}"
                         Click="SendFile"
-                        Grid.Column="1"/>
+                        Grid.Column="1"/>-->
             </Grid>
         </Border>
         <Grid x:Name="TaskInputBox" Visibility="Collapsed">

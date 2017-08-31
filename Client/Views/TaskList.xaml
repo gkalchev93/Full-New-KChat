@@ -12,7 +12,12 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dgTasks" Grid.Row="0" Background="Gray" Foreground="White" />
+
+
+
+        <DataGrid x:Name="dgTasks" Grid.Row="0" Background="Gray" Foreground="White" VerticalGridLinesBrush="White" >
+        </DataGrid>
 
     </Grid>
+
 </Window>
